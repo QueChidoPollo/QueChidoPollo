@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedidos y Administración</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1 id="storeTitle">Pollería Express</h1>
+      <p id="userBadge" class="muted">Cargando usuario...</p>
+    </div>
+    <nav id="navTabs" class="tabs hidden">
+      <button id="tabClient" class="tab active">Menú</button>
+      <button id="tabAdmin" class="tab">Admin</button>
+    </nav>
+  </header>
+
+  <!-- VISTA CLIENTE -->
+  <main id="clientView" class="container">
+    <section id="menuList" class="grid"></section>
+
+    <section class="card cart-box">
+      <h2>Tu pedido</h2>
+      <div id="cartItems" class="muted">Tu carrito está vacío.</div>
+
+      <div class="form-group">
+        <label for="deliveryType">Tipo de entrega</label>
+        <select id="deliveryType">
+          <option value="pickup">Recoger en local</option>
+          <option value="delivery">A domicilio</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="addressInput">Dirección (si es a domicilio)</label>
+        <input id="addressInput" type="text" placeholder="Calle, número, colonia..." />
+      </div>
+
+      <div class="form-group">
+        <label for="notesInput">Notas extra</label>
+        <input id="notesInput" type="text" placeholder="Ej. Sin picante, bien dorado..." />
+      </div>
+
+      <div class="cart-footer">
+        <strong>Total: $<span id="cartTotal">0.00</span></strong>
+        <button id="btnCheckout" class="btn-primary" disabled>Enviar pedido</button>
+      </div>
+      <p id="orderFeedback" class="feedback"></p>
+    </section>
+  </main>
+
+  <!-- VISTA ADMINISTRADOR -->
+  <main id="adminView" class="container hidden">
+    <section class="card">
+      <h2>Pedidos en tiempo real</h2>
+      <div id="adminOrders" class="stack"></div>
+    </section>
+
+    <section class="card">
+      <h2>Disponibilidad y precios del menú</h2>
+      <div id="adminProducts" class="stack"></div>
+    </section>
+  </main>
+
+  <section id="accessDeniedView" class="container hidden">
+    <div class="card">
+      <h2>Acceso restringido</h2>
+      <p class="muted" style="margin-top: 6px;">
+        Tu cuenta de Telegram no está autorizada para acceder al panel de administración.
+      </p>
+      <button id="btnBackToClient" class="btn-primary" style="margin-top: 12px;">
+        Ir al menú de cliente
+      </button>
+    </div>
+  </section>
+  <script src="./app.js"></script>
+</body>
+</html>
