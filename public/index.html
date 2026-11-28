@@ -55,17 +55,42 @@
   </main>
 
   <!-- VISTA ADMINISTRADOR -->
-  <main id="adminView" class="container hidden">
-    <section class="card">
-      <h2>Pedidos en tiempo real</h2>
-      <div id="adminOrders" class="stack"></div>
-    </section>
+  <!-- DENTRO DE public/index.html -->
+<main id="adminView" class="container hidden">
+  <section class="stats-grid">
+    <div class="card stat-card">
+      <span class="muted">Pedidos activos</span>
+      <strong id="statActiveOrders">0</strong>
+    </div>
+    <div class="card stat-card">
+      <span class="muted">Ventas hoy</span>
+      <strong>$<span id="statTodaySales">0.00</span></strong>
+    </div>
+    <div class="card stat-card">
+      <span class="muted">Agotados</span>
+      <strong id="statOutOfStock">0</strong>
+    </div>
+  </section>
 
-    <section class="card">
-      <h2>Disponibilidad y precios del menú</h2>
-      <div id="adminProducts" class="stack"></div>
-    </section>
-  </main>
+  <section class="card">
+    <div class="admin-header">
+      <h2>Pedidos entrantes</h2>
+      <select id="filterStatus">
+        <option value="all">Todos</option>
+        <option value="pending">Pendientes</option>
+        <option value="preparing">Preparando</option>
+        <option value="out_for_delivery">En camino</option>
+        <option value="completed">Entregados</option>
+      </select>
+    </div>
+    <div id="adminOrders" class="stack"></div>
+  </section>
+
+  <section class="card">
+    <h2>Menú, precios y disponibilidad</h2>
+    <div id="adminProducts" class="stack"></div>
+  </section>
+</main>
 
   <section id="accessDeniedView" class="container hidden">
     <div class="card">

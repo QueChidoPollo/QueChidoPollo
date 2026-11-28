@@ -397,4 +397,50 @@ function escapeHtml(str) {
     .replaceAll('"', "&quot;");
 }
 
+// Ejemplo de cambio de estado de pedido y disponibilidad en Supabase
+async function updateOrderStatus(orderId, nextStatus) {
+  const { error } = await supabaseClient
+    .from("orders")
+    .update({ status: nextStatus })
+    .eq("id", orderId);
+
+  if (error) {
+    tg.showAlert("No se pudo actualizar el estado del pedido.");
+    return;
+  }
+  await loadAdminOrders();
+}
+
+async function toggleProductAvailability(productId, currentValue) {
+  const { error } = await supabaseClient
+    .from("products")
+    .update({ is_available: !currentValue, updated_at: new Date().toISOString() })
+    .eq("id", productId);
+
+  if (error) {
+    tg.showAlert("No se pudo cambiar la disponibilidad.");
+    return;
+  }
+  await loadAdminProducts();
+}
+
+async function updateProductPrice(productId, newPrice) {
+  const numericPrice = Number(newPrice);
+  if (Number.isNaN(numericPrice) || numericPrice <= 0) {
+    tg.showAlert("Ingresa un precio válido.");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("products")
+    .update({ price: numericPrice, updated_at: new Date().toISOString() })
+    .eq("id", productId);
+
+  if (error) {
+    tg.showAlert("No se pudo guardar el precio.");
+    return;
+  }
+  tg.showPopup({ title: "Listo", message: "Precio actualizado.", buttons: [{ type: "ok" }] });
+}
+
 init();
